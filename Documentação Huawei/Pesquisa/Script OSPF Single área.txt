@@ -1,0 +1,38 @@
+OSPF SINGLE AREA
+
+system-view
+    sysname MATRIZ
+    vlan batch 10 50 60
+    interface XGigabitethernet 0/0/2
+        port link-tipe trunk
+        port trunk allow-pass vlan 10
+        quit
+    interface XGigabitethernet 0/0/3
+        port link-type trunk
+        port trunk allow-pass vlan 50
+        quit
+    interface XGigabitethernet 0/0/1
+        port link-type trunk
+        port trunk allow-pass vlan 60
+        quit
+
+    interface vlanif 10
+        ip address 172.16.255.1 30
+        quit
+    interface vlanif 50
+        ip address 172.16.255.18 30
+        quit
+    interface vlanif 60
+        ip address 192.168.0.1 23
+        quit
+
+    ospf 1 router-id 172.16.255.0
+        area 0
+            network 172.16.255.0 0.0.0.3
+            network 172.16.255.16 0.0.0.3
+            quit
+        quit
+    quit
+reset ospf 1 process
+save
+yes
