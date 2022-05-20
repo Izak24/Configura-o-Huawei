@@ -1,0 +1,51 @@
+system-view
+    sysname MATRIZ
+    aaa
+        local-user senai password irreversible-cipher S3n@1Project2022CTI
+        local-user senai service-type telnet ssh http
+        local-user senai privilege level 15
+        quit
+        vlan 10
+            name Vlan-Matriz
+            description Vlan-Matriz
+            quit
+        interface loopback 0
+            ip address 1.1.1.1 32
+            quit
+        ospf 1 router-id 1.1.1.1
+            area 0
+                network 1.1.1.1 0.0.0.0
+                network 172.16.255.0 0.0.0.3
+                network 172.16.255.16 0.0.0.3
+                quit
+            quit
+        interface XGigabitEthernet 0/0/1
+            undo portswitch
+            ip address 172.16.255.1 30
+            ospf enable 1 area 0.0.0.0
+            ospf network-type p2p
+            ospf cost 10
+            quit
+        interface XGigabitEthernet 0/0/2
+            undo portswitch
+            ip address 172.16.255.18 30
+            ospf enable 1 area 0.0.0.0
+            ospf network-type p2p
+            ospf cost 10
+            quit
+        interface XGigabitEthernet 0/0/3
+            loopback internal
+            port link-type trunk
+            port trunk allow-pass vlan 10
+            quit
+        interface vlanif 10
+            ip address 192.168.0.1 23
+            quit
+        quit
+    quit
+reset ospf 1 process
+yes
+save
+yes
+save config.cfg
+yes

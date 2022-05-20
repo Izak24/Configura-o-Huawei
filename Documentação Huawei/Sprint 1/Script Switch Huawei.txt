@@ -1,0 +1,23 @@
+    system-view
+        sysname MATRIZ
+        vlan 10
+            name Vlan-Matriz
+            description Vlan-Matriz
+            q
+        interface XGigabitEthernet 0/0/3
+            port link-type access
+            port default vlan 10 
+            q
+        dhcp enable 
+        ospf 1 router-id 172.16.255.0
+            area 0
+                network 172.16.255.0 0.0.0.3
+            area 4
+            network 172.16.255.16 0.0.0.3
+            q
+        q 
+    q 
+reset ospf 1 process
+y
+Save
+y
