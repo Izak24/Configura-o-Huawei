@@ -1,9 +1,10 @@
 system-view
     sysname MATRIZ
     aaa
-        local-user senai password irreversible-cipher S3n@1Project2022CTI
-        local-user senai service-type telnet ssh http
-        local-user senai privilege level 15
+        local-user cti password irreversible-cipher S3n@1Project2022CTI
+        local-user cti service-type telnet ssh http
+        local-user cti privilege level 15
+        yes
         quit
         vlan 10
             name Vlan-Matriz
@@ -11,6 +12,7 @@ system-view
             quit
         interface loopback 0
             ip address 1.1.1.1 32
+            yes
             quit
         ospf 1 router-id 1.1.1.1
             area 0
@@ -40,12 +42,12 @@ system-view
             quit
         interface vlanif 10
             ip address 192.168.0.1 23
+            yes
             quit
         quit
-    quit
 reset ospf 1 process
 yes
 save
 yes
-save config.cfg
-yes
+save flash:/vrpcfg.zip
+yes 
